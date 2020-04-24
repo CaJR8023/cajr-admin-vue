@@ -37,30 +37,42 @@
       <el-col :span="6">
         <div class="cardItem">
           <div class="cardItem_txt">
-            <h1 style="margin-top:10px; font-size:22px; font-weight:500;">开启定时推荐</h1>
+            <h1 style="margin-top:10px; font-size:22px; font-weight:500;">
+              开启定时推荐开关
+            </h1>
           </div>
           <div class="cardItem_icon" style="margin-top:40px;">
-            <el-switch  active-color="#13ce66" inactive-color="#ff4949" v-model="recStart"></el-switch>
+            <el-switch
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+              v-model="recStart"
+            ></el-switch>
           </div>
         </div>
       </el-col>
       <el-col :span="6">
         <div class="cardItem">
           <div class="cardItem_txt">
-            <h1 style="margin-top:10px; font-size:22px; font-weight:500;">开启定时新闻抓取</h1>
+            <h1 style="margin-top:10px; font-size:22px; font-weight:500;">
+              开启定时新闻抓取开关
+            </h1>
           </div>
           <div class="cardItem_icon" style="margin-top:40px;">
-            <el-switch  active-color="#13ce66" inactive-color="#ff4949" v-model="newsDataStart"></el-switch>
+            <el-switch
+              active-color="#13ce66"
+              inactive-color="#ff4949"
+              v-model="newsDataStart"
+            ></el-switch>
           </div>
         </div>
       </el-col>
     </el-row>
     <!-- end -->
-        <!-- bar chart -->
+    <!-- bar chart -->
     <bar-charts class="barCharts" :barData="barData"></bar-charts>
     <!-- end -->
     <!-- lineEcharts -->
-        <!-- table and pie -->
+    <!-- table and pie -->
     <el-row class="tableChart">
       <el-col :span="8">
         <pie-charts class="pieCharts" :pieData="pieData"></pie-charts>
@@ -76,11 +88,7 @@
 import CountTo from 'vue-count-to'
 import PieCharts from './components/PieCharts'
 import BarCharts from './components/BarCharts'
-import {
-  getCardsData,
-  getBarData,
-  getPieData
-} from '@/api/dashboard'
+import { getCardsData, getBarData, getPieData } from '@/api/dashboard'
 export default {
   data() {
     return {
@@ -92,7 +100,7 @@ export default {
       barData: {},
       recStart: false,
       newsDataStart: false,
-      pieData:[]
+      pieData: []
     }
   },
   created() {
@@ -105,17 +113,14 @@ export default {
   },
   methods: {
     _getAllData() {
-      this.$http
-        .all([getCardsData(), getBarData(), getPieData()])
-        .then(
-          this.$http.spread((cardData, barData, pieData) => {
-            
-            this.totalUserNum = cardData.data.totalUserNum ;
-            this.totalNewsNum = cardData.data.totalNewsNum ;
-              this.barData = barData;
-              this.pieData = pieData.data;
-          })
-        )
+      this.$http.all([getCardsData(), getBarData(), getPieData()]).then(
+        this.$http.spread((cardData, barData, pieData) => {
+          this.totalUserNum = cardData.data.totalUserNum
+          this.totalNewsNum = cardData.data.totalNewsNum
+          this.barData = barData
+          this.pieData = pieData.data
+        })
+      )
     }
   }
 }

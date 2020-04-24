@@ -49,7 +49,7 @@ $axios.interceptors.response.use(
       switch (error.response.status) {
         case 401:
           // 返回401 清除token信息并跳转到登陆页面
-          store.commit('DEL_TOKEN')
+          store.dispatch('user/loginOut')
           router.replace({
             path: '/login',
             query: {
