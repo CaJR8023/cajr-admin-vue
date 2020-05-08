@@ -46,6 +46,9 @@
               active-color="#13ce66"
               inactive-color="#ff4949"
               v-model="recStart"
+              active-value= "true"
+              inactive-value = "false"
+              :change="_startCrawlNewestNews()"
             ></el-switch>
           </div>
         </div>
@@ -61,7 +64,10 @@
             <el-switch
               active-color="#13ce66"
               inactive-color="#ff4949"
+              active-value= "true"
+              inactive-value = "false"
               v-model="newsDataStart"
+              :change="_startCrawlNewsData()"
             ></el-switch>
           </div>
         </div>
@@ -88,7 +94,8 @@
 import CountTo from 'vue-count-to'
 import PieCharts from './components/PieCharts'
 import BarCharts from './components/BarCharts'
-import { getCardsData, getBarData, getPieData } from '@/api/dashboard'
+import { Message } from 'element-ui'
+import { getCardsData, getBarData, getPieData, startCrawlNewestNews, startCrawlNewsData } from '@/api/dashboard'
 export default {
   data() {
     return {
@@ -121,6 +128,40 @@ export default {
           this.pieData = pieData.data
         })
       )
+    },
+    _startCrawlNewsData(){
+      let recStart = 0
+      if(this.recStart){
+        recStart = 1
+      }else{
+        recStart = 0
+      }
+      startCrawlNewsData(recStart).then(res => {
+        if(res.data == 1){
+          if(recStart == 1){
+            Message.success('开启成功!')
+          }else{
+            Message.success('关闭成功!')
+          }
+        }
+      })
+    },
+    _startCrawlNewestNews(){
+      let newsDataStart = 0
+      if(this.newsDataStart){
+        newsDataStart = 1
+      }else{
+        newsDataStart = 0
+      }
+      startCrawlNewestNews(newsDataStart).then(res => {
+        if(res.data == 1){
+          if(newsDataStart == 1){
+            Message.success('开启成功!')
+          }else{
+            Message.success('关闭成功!')
+          }
+        }
+      })
     }
   }
 }
